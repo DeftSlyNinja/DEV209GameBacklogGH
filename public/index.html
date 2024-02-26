@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+    <script src="javascripts/main.js"></script>
+    <link rel="stylesheet" href="stylesheets/style.css">
+
+
+
+    <title>Games</title>
+</head>
+
+<body>
+    <!-- Homepage -->
+    <div data-role="page" id="home" data-theme='b'>
+        <!-- Home Page Header -->
+        <div data-role="header" data-theme='b'>
+            <!-- Navigation Bar -->
+            <div data-role="navbar" data-theme='b'>
+                <ul>
+                    <li><a href="#home" data-transition="slideup">Home Page</a></li>
+                    <li><a href="#backlog" data-transition="slideup">Backlog</a></li>
+                    <li><a href="#search-filter" data-transition="slideup">Search / Filter</a></li>
+                    <li><a href="#add" data-transition="slideup">Add Game</a></li>
+                </ul>
+            </div>
+            <!-- Page Title -->
+            <br><h2>Homepage</h2><br>
+        </div>
+        <!-- Home Page Content -->
+        <div data-role="content" data-theme='b'>
+            <!-- Description of the site -- we can consolidate if we'd like -->
+            <p id="pintro">This website helps you keep track of your backlog of video games and allows you to filter them by genre
+                or search for them by name.</p>
+            <p><b>Backlog</b> will display your list of games in order of priority.</p>
+            <p><b>Search / Filter</b> will allow you to filter games by genre or search for them by name.</p>
+            <p><b>Add Game</b> will allow you to add new games to your backlog.</p>
+        </div>
+        <!-- Home Page Footer -->
+        <div data-role="footer" data-theme='b'>
+            <h3>Copyright 2024, by Christopher Masson & Brooks Halliday</h3>
+        </div>
+    </div>
+    <!-- Backlog -->
+    <div data-role="page" id="backlog" data-theme='b'>
+        <!-- Backlog Page Header -->
+        <div data-role="header" data-theme='b'>
+            <!-- Navigation Bar -->
+            <div data-role="navbar" data-theme='b'>
+                <ul>
+                    <li><a href="#home" data-transition="slideup">Home Page</a></li>
+                    <li><a href="#backlog" data-transition="slideup">Backlog</a></li>
+                    <li><a href="#search-filter" data-transition="slideup">Search / Filter</a></li>
+                    <li><a href="#add" data-transition="slideup">Add Game</a></li>
+                </ul>
+            </div>
+            <!-- Page Title -->
+            <br><h2>Backlog</h2><br>
+        </div>
+        <!-- Backlog Page Content -->
+        <div data-role="content" data-theme='b'>
+            <!-- Backlog List w/ sample entries -->
+            <table id="tableID"></table>
+            <ul data-role="listview" id="backlogUL">
+            </ul>
+        </div>
+
+        <div data-role="footer" data-theme='b'>
+            <h3>Copyright 2024, by Christopher Masson & Brooks Halliday</h3>
+        </div>
+    </div>
+    <!-- Search / Filter -->
+    <div data-role="page" id="search-filter" data-theme='b'>
+        <!-- Search / Filter Page Header -->
+        <div data-role="header" data-theme='b'>
+            <!-- Navigation Bar -->
+            <div data-role="navbar" data-theme='b'>
+                <ul>
+                    <li><a href="#home" data-transition="slideup">Home Page</a></li>
+                    <li><a href="#backlog" data-transition="slideup">Backlog</a></li>
+                    <li><a href="#search-filter" data-transition="slideup">Search / Filter</a></li>
+                    <li><a href="#add" data-transition="slideup">Add Game</a></li>
+                </ul>
+            </div>
+            <!-- Page Title -->
+            <br><h2>Search / Filter</h2><br>
+        </div>
+        <!-- Search / Filter Page Content -->
+        <div data-role="content" data-theme='b'>
+            <!-- Title Search -->
+            <label for="searchEntry">Search by title:</label>
+            <input type="text" value="" id="searchEntry">
+            <button id="searchButton">Search</button>
+            <!-- Filter Genre Drop Down Menu -->
+            <label for="">Filter by Genre:</label>
+            <select name="selectFilter" id="selectFilter">
+                <option value="FPS">FPS</option>
+                <option value="RPG">RPG</option>
+                <option value="Puzzle">Puzzle</option>
+                <option value="Strategy">Strategy</option>
+                <option value="Sports">Sports</option>
+            </select>
+            <button id="filterButton">Filter</button><br>
+            <!-- Filtered List w/ sample entries -->
+            <ul data-role="listview" id="filteredUL">
+            </ul><br>
+        </div>
+
+        <div data-role="footer" data-theme='b'>
+            <h3>Copyright 2024, by Christopher Masson & Brooks Halliday</h3>
+        </div>
+    </div>
+    <!-- New Game -->
+    <div data-role="page" id="add" data-theme='b'>
+        <!-- Add Game Page Header -->
+        <div data-role="header" data-theme='b'>
+            <!-- Navigation Bar -->
+            <div data-role="navbar" data-theme='b'>
+                <ul>
+                    <li><a href="#home" data-transition="slideup">Home Page</a></li>
+                    <li><a href="#backlog" data-transition="slideup">Backlog</a></li>
+                    <li><a href="#search-filter" data-transition="slideup">Search / Filter</a></li>
+                    <li><a href="#add" data-transition="slideup">Add Game</a></li>
+                </ul>
+            </div>
+            <!-- Page Title -->
+            <br><h2>Add Game</h2><br>
+        </div>
+        <!-- New Game Page Content -->
+        <div data-role="content" data-theme='b'>
+            <!-- Title Field -->
+            <label for="title">Title:</label>
+            <input type="text" value="" id="title">
+            <!-- Genre Drop Down Menu -->
+            <label for="genre">Genre:</label>
+            <select name="select-genre" id="genre">
+                <option value="FPS">FPS</option>
+                <option value="RPG">RPG</option>
+                <option value="Puzzle">Puzzle</option>
+                <option value="Strategy">Strategy</option>
+                <option value="Sports">Sports</option>
+            </select>
+            <!-- Link Field... Wiki link or steam page link? -->
+            <label for="link">Link:</label>
+            <input type="text" value="" id="link">
+            <!-- Priority Entry -->
+            <label for="priority">Priority:</label>
+            <input type="text" value="" id="priority">
+            <!-- Add Game Button -->
+            <button id="addButton">Add Game</button>
+            <!-- Confirmation text so the user knows the game was entered. -->
+            <p id="addConfirm"></p>
+        </div>
+
+        <div data-role="footer" data-theme='b'>
+            <h3>Copyright 2024, by Christopher Masson & Brooks Halliday</h3>
+        </div>
+    </div>
+
+</body>
+
+</html>
