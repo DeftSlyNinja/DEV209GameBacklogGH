@@ -8,22 +8,33 @@ let GameObject = function (pID, pTitle, pGenre, pLink, pPriority) {
     this.prio = pPriority;
 }
 
-GameArray.push(new GameObject(1, "Persona 3", "RPG", "https://store.steampowered.com/app/2161700/Persona_3_Reload/", 1));
-GameArray.push(new GameObject(2, "Call of Duty", "FPS", "https://store.steampowered.com/app/1938090/Call_of_Duty/", 2));
-GameArray.push(new GameObject(3, "XCOM", "Strategy", "https://store.steampowered.com/app/200510/XCOM_Enemy_Unknown/", 3));
+// GameArray.push(new GameObject(1, "Persona 3", "RPG", "https://store.steampowered.com/app/2161700/Persona_3_Reload/", 1));
+// GameArray.push(new GameObject(2, "Call of Duty", "FPS", "https://store.steampowered.com/app/1938090/Call_of_Duty/", 2));
+// GameArray.push(new GameObject(3, "XCOM", "Strategy", "https://store.steampowered.com/app/200510/XCOM_Enemy_Unknown/", 3));
 
 document.addEventListener("DOMContentLoaded", function (event) {
 
     createBacklog();
 
     document.getElementById("addButton").addEventListener("click", function () {
-        GameArray.push(new GameObject((GameArray.length + 1), document.getElementById("title").value, selectedType, document.getElementById("link").value,
-            document.getElementById("priority").value));
+        let newGame = new GameObject((GameArray.length + 1), document.getElementById("title").value, selectedType, document.getElementById("link").value,
+            parseInt(document.getElementById("priority").value));
 
         alert(document.getElementById("title").value + " has been added to the backlog!")
         document.getElementById("title").value = "";
         document.getElementById("link").value = "";
         document.getElementById("priority").value = "";
+
+        $.ajax({
+            url : "/AddGame",
+            type: "POST",
+            data: JSON.stringify(newGame),
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+            console.log(result);
+            document.location.href = "index.html#ListAll";
+            }
+            });
 
         createBacklog();
     })
@@ -50,6 +61,12 @@ function createBacklog() {
 
     let backlogUL = document.getElementById("backlogUL");
     backlogUL.innerHTML = "";
+
+    $.get("/getAllGames", function(data, status){ // AJAX get
+        GameArray = data; // copy returned server json data into local array
+        // now INSIDE this “call back” anonymous function,
+        // update the web page with this new data
+    
 
     GameArray.forEach(function (element,) {
         const newRow = document.createElement("tr");
@@ -80,6 +97,7 @@ function createBacklog() {
         link.innerHTML = element.ID + " -  " + element.title + " (" + element.genre + ")";
         li.appendChild(link);
         backlogUL.appendChild(li);
+        
     })
 
 
@@ -97,6 +115,7 @@ function createBacklog() {
             }
         currentRow.onclick = createClickHandler(currentRow);
     }
+});
 }
 
 function openYouTube(which) {

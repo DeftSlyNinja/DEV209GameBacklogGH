@@ -11,9 +11,41 @@ let GameObject = function (pID, pTitle, pGenre, pLink, pPriority) {
     this.prio = pPriority;
 }
 
+var fs = require("fs");
+
+let fileManager  = {
+  read: function() {
+    var rawdata = fs.readFileSync('objectdata.json');
+    let goodData = JSON.parse(rawdata);
+    ServerGameArray = goodData;
+  },
+
+  write: function() {
+    let data = JSON.stringify(ServerGameArray);
+    fs.writeFileSync('objectdata.json', data);
+  },
+
+  validData: function() {
+    var rawdata = fs.readFileSync('objectdata.json');
+    console.log(rawdata.length);
+    if(rawdata.length < 1) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+};
+
+if (!fileManager.validData()) {
 ServerGameArray.push(new GameObject(1, "Persona 3", "RPG", "https://store.steampowered.com/app/2161700/Persona_3_Reload/", 1));
 ServerGameArray.push(new GameObject(2, "Call of Duty", "FPS", "https://store.steampowered.com/app/1938090/Call_of_Duty/", 2));
 ServerGameArray.push(new GameObject(3, "XCOM", "Strategy", "https://store.steampowered.com/app/200510/XCOM_Enemy_Unknown/", 3));
+fileManager.write();
+}
+else {
+  fileManager.read(); // do have prior movies so load up the array
+}
 
 console.log(ServerGameArray);
 
@@ -24,18 +56,20 @@ router.get('/', function(req, res, next) {
 
 /* GET Backlog data */
 router.get('/getAllGames', function(req, res) {
+  fileManager.read();
   res.status(200).json(ServerGameArray);
 });
 
-/* Add one new movie */
+/* Add one new game */
 router.post('/AddGame', function(req, res) {
   const newGame = req.body;
   ServerGameArray.push(newGame);
+  fileManager.write();
   res.status(200).json(newGame);
 });
 
 // add route for delete
-router.delete('/DeleteMovie/:ID', (req, res) => {
+router.delete('/DeleteGame/:ID', (req, res) => {
   const delID = req.params.ID;
   let found = false;
   let pointer = GetArrayPointer(delID);
